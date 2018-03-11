@@ -1,5 +1,3 @@
-@file:JvmName("run-SuperEllipse")
-
 package com.holinaty.superellipse
 
 import processing.core.PApplet
@@ -45,8 +43,3 @@ class SuperEllipse : PApplet() {
 
 }
 
-fun main(args: Array<String>) {
-    val processingArgs: Array<String> = arrayOf("SpaceColonization")
-    val superEllipse = SuperEllipse()
-    PApplet.runSketch(processingArgs, superEllipse)
-}
