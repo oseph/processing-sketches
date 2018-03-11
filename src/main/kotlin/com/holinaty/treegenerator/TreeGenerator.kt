@@ -1,4 +1,4 @@
-@file:JvmName("run-TreeGenerator")
+@file:JvmName("runTreeGenerator")
 
 package com.holinaty.treegenerator
 
