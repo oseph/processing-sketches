@@ -90,11 +90,14 @@ class Tree(val pa: SpaceColonizedTree, var size: Int) {
         }
     }
 
-    fun show(showTrees: Boolean) {
-//        pa.fill(255f,255f,0f)
-//        for (leaf in leaves) {
-//            leaf.show()
-//        }
+    fun show(showleafs: Boolean) {
+
+        if (showleafs) {
+            pa.fill(255f, 255f, 0f)
+            for (leaf in leaves) {
+                leaf.show()
+            }
+        }
 
         for (branch in branches) {
             branch.show()
