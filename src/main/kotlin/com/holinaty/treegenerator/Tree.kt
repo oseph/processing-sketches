@@ -2,7 +2,7 @@ package com.holinaty.treegenerator
 
 import processing.core.*
 
-class Tree(val pa: SpaceColonizedTree, var size: Int) {
+class Tree(val pa: TreeGenerator, var size: Int) {
 
 
     var pos = PVector(pa.width*0.5f, pa.height.toFloat())

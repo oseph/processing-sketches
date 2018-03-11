@@ -1,8 +1,10 @@
+@file:JvmName("run-TreeGenerator")
+
 package com.holinaty.treegenerator
 
 import processing.core.PApplet
 
-class SpaceColonizedTree : PApplet() {
+class TreeGenerator : PApplet() {
 
     val w = 800
     val h = 800
@@ -42,6 +44,6 @@ class SpaceColonizedTree : PApplet() {
 
 fun main(args: Array<String>) {
     val processingArgs: Array<String> = arrayOf("SpaceColonization")
-    val spaceColonizedTree = SpaceColonizedTree()
+    val spaceColonizedTree = TreeGenerator()
     PApplet.runSketch(processingArgs, spaceColonizedTree)
 }

@@ -1,3 +1,5 @@
+@file:JvmName("run-SuperEllipse")
+
 package com.holinaty.superellipse
 
 import processing.core.PApplet

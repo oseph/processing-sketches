@@ -43,3 +43,13 @@ compileTestKotlin {
         jvmTarget = "1.8"
     }
 }
+
+task runSuperEllipse(type: JavaExec) {
+    main = 'com.holinaty.superellipse.run-SuperEllipse'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runTreeGenerator(type: JavaExec) {
+    main = 'com.holinaty.treegenerator.run-TreeGenerator'
+    classpath = sourceSets.main.runtimeClasspath
+}
