@@ -8,6 +8,7 @@ class SuperShape2DApplet : PApplet() {
     val COLS = 5
     val ROWS = 5
     var superShapes = ArrayList<SuperShape2D>()
+    var bgcol = color(random(255f),random(255f),random(255f))
 
     override fun settings() {
         size(600,600)
@@ -23,15 +24,20 @@ class SuperShape2DApplet : PApplet() {
     }
 
     override fun draw() {
-        background(80)
+        background(bgcol)
         for (s in superShapes) {
             s.update()
             s.draw()
         }
     }
 
-    inner class SuperShape2D(var x: Float, var y: Float, var radius: Float) {
+    override fun mousePressed() {
+        for (s in superShapes) {
+            s.checkClick(mouseX.toFloat(),mouseY.toFloat())
+        }
+    }
 
+    inner class SuperShape2D(var x: Float, var y: Float, var radius: Float) {
         var b = 1f
         var a = 1f
         var m = floor(random(1f,21f))
@@ -41,6 +47,7 @@ class SuperShape2DApplet : PApplet() {
         var id = random(50000f).toInt()
         var rotAng = 0.0f
         val rotAngDir = if (random(1f) > 0.5f) 1f else -1f
+        var col = color(random(255f),random(255f),random(255f))
 
         fun draw() {
             val total = 360
@@ -48,7 +55,7 @@ class SuperShape2DApplet : PApplet() {
             var angle = 0f
             rotAng += increment
 
-            fill(255)
+            fill(col)
             pushMatrix()
             translate(x, y)
             rotate(rotAng*rotAngDir)
@@ -65,8 +72,8 @@ class SuperShape2DApplet : PApplet() {
         }
 
         fun update() {
-            n1 = map(noise(frameCount*0.05f+id),0f, 1f, 1f,12f)
-            n2 = map(noise(frameCount*0.05f+id+9000),0f, 1f, 0f,12f)
+            n1 = map(noise(frameCount*0.025f+id),0f, 1f, 0.1f,5f)
+            n2 = map(noise(frameCount*0.025f+id+9000),0f, 1f, -4f,8f)
             n3 = n2
         }
 
@@ -87,6 +94,13 @@ class SuperShape2DApplet : PApplet() {
             return (1 / part3)
         }
 
+        fun checkClick(mx: Float, my: Float) {
+            if (mousePressed) {
+                if (mx > x - radius && mx < x +radius && my > y -radius && my < y+radius) {
+                    m = floor(random(1f,21f))
+                    col = color(random(255f),random(255f),random(255f))
+                }
+            }
+        }
     }
-
 }
