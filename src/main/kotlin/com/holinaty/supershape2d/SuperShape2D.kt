@@ -3,12 +3,21 @@ package com.holinaty.supershape2d
 import processing.core.PApplet
 import processing.core.PConstants
 
+
+/*
+* SuperShape
+* Hit spacebar to generate a new grid.
+* Click on individual shapes to generate a new shape.*
+* */
+
 class SuperShape2DApplet : PApplet() {
 
-    val COLS = 5
-    val ROWS = 5
+    var COLS = 5
+    var ROWS = 5
     var superShapes = ArrayList<SuperShape2D>()
-    var bgcol = color(random(255f),random(255f),random(255f))
+    var bgcol = 0
+    var mmin = 1f
+    var mmax = 21f
 
     override fun settings() {
         size(600,600)
@@ -16,9 +25,10 @@ class SuperShape2DApplet : PApplet() {
 
     override fun setup() {
         noStroke()
+        bgcol = color(random(255f))
         for (x in 0..COLS) {
             for (y in 0..ROWS) {
-                superShapes.add(SuperShape2D(x*120f,y*120f,40f))
+                superShapes.add(SuperShape2D(x*120f,y*120f,40f,mmin, mmax))
             }
         }
     }
@@ -37,28 +47,51 @@ class SuperShape2DApplet : PApplet() {
         }
     }
 
-    inner class SuperShape2D(var x: Float, var y: Float, var radius: Float) {
+    override fun keyPressed() {
+        if (key == ' ') {
+            bgcol = color(random(0f,100f))
+            superShapes.clear()
+            background(bgcol)
+            COLS = floor(random(3f,7f))
+            ROWS = COLS
+            mmax = random(3f,50f)
+            var spac = width/COLS.toFloat()
+            var spacr = spac*0.3f
+            for (x in 0..COLS) {
+                for (y in 0..ROWS) {
+                    superShapes.add(SuperShape2D(x*spac,y*spac,spacr,mmin, mmax))
+                }
+            }
+        }
+    }
+
+    inner class SuperShape2D(var x: Float, var y: Float, var radius: Float, var min: Float, var max: Float) {
+
         var b = 1f
         var a = 1f
-        var m = floor(random(1f,21f))
+        var m = floor(random(min, max))
         var n1 = 10f
         var n2 = 5f
         var n3 = 5f
         var id = random(50000f).toInt()
         var rotAng = 0.0f
         val rotAngDir = if (random(1f) > 0.5f) 1f else -1f
-        var col = color(random(255f),random(255f),random(255f))
+        var col: Int
+        var total: Int
+
+        init {
+            col = color(random(150f,255f))
+            total = 360
+        }
 
         fun draw() {
-            val total = 360
             val increment = PConstants.TWO_PI / total
             var angle = 0f
             rotAng += increment
-
             fill(col)
             pushMatrix()
             translate(x, y)
-            rotate(rotAng*rotAngDir)
+            rotate(rotAng * rotAngDir)
             beginShape()
             while (angle < PConstants.TWO_PI) {
                 val r = superShape2D(angle)
@@ -72,8 +105,8 @@ class SuperShape2DApplet : PApplet() {
         }
 
         fun update() {
-            n1 = map(noise(frameCount*0.025f+id),0f, 1f, 0.1f,5f)
-            n2 = map(noise(frameCount*0.025f+id+9000),0f, 1f, -4f,8f)
+            n1 = map(noise(frameCount * 0.025f + id), 0f, 1f, 0.1f, 5f)
+            n2 = map(noise(frameCount * 0.025f + id + 9000), 0f, 1f, -4f, 8f)
             n3 = n2
         }
 
@@ -96,10 +129,24 @@ class SuperShape2DApplet : PApplet() {
 
         fun checkClick(mx: Float, my: Float) {
             if (mousePressed) {
-                if (mx > x - radius && mx < x +radius && my > y -radius && my < y+radius) {
-                    m = floor(random(1f,21f))
-                    col = color(random(255f),random(255f),random(255f))
+                if (mx > x - radius && mx < x + radius && my > y - radius && my < y + radius) {
+                    m = floor(random(min, max))
+                    col = getColor()
                 }
+            }
+        }
+
+        fun getColor(): Int {
+            return if (random(1f) > 0.8f) {
+                color(255)
+            } else if (random(1f) > 0.6f) {
+                color(200)
+            } else if (random(1f) > 0.4f) {
+                color(150)
+            } else if (random(1f) > 0.2f) {
+                color(100)
+            } else {
+                color(0)
             }
         }
     }
