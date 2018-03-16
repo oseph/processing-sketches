@@ -5,19 +5,19 @@ import processing.core.PConstants
 
 
 /*
-* SuperShape
-* Hit spacebar to generate a new grid.
-* Click on individual shapes to generate a new shape.*
+* SuperShape2D
+* Use spacebar to generate a new grid.
+* Click on individual shapes to generate a new shape.
 * */
 
 class SuperShape2DApplet : PApplet() {
 
-    var COLS = 5
-    var ROWS = 5
-    var superShapes = ArrayList<SuperShape2D>()
-    var bgcol = 0
-    var mmin = 1f
-    var mmax = 21f
+    private var COLUMNS = 5
+    private var ROWS = 5
+    private var superShapes = ArrayList<SuperShape2D>()
+    private var bgcol = 0
+    private var mmin = 1f
+    private var mmax = 21f
 
     override fun settings() {
         size(600,600)
@@ -26,7 +26,7 @@ class SuperShape2DApplet : PApplet() {
     override fun setup() {
         noStroke()
         bgcol = color(random(255f))
-        for (x in 0..COLS) {
+        for (x in 0..COLUMNS) {
             for (y in 0..ROWS) {
                 superShapes.add(SuperShape2D(x*120f,y*120f,40f,mmin, mmax))
             }
@@ -52,12 +52,12 @@ class SuperShape2DApplet : PApplet() {
             bgcol = color(random(0f,100f))
             superShapes.clear()
             background(bgcol)
-            COLS = floor(random(3f,7f))
-            ROWS = COLS
+            COLUMNS = floor(random(3f,7f))
+            ROWS = COLUMNS
             mmax = random(3f,50f)
-            var spac = width/COLS.toFloat()
+            var spac = width/COLUMNS.toFloat()
             var spacr = spac*0.3f
-            for (x in 0..COLS) {
+            for (x in 0..COLUMNS) {
                 for (y in 0..ROWS) {
                     superShapes.add(SuperShape2D(x*spac,y*spac,spacr,mmin, mmax))
                 }
@@ -131,22 +131,18 @@ class SuperShape2DApplet : PApplet() {
             if (mousePressed) {
                 if (mx > x - radius && mx < x + radius && my > y - radius && my < y + radius) {
                     m = floor(random(min, max))
-                    col = getColor()
+                    col = getNewColor()
                 }
             }
         }
 
-        fun getColor(): Int {
-            return if (random(1f) > 0.8f) {
-                color(255)
-            } else if (random(1f) > 0.6f) {
-                color(200)
-            } else if (random(1f) > 0.4f) {
-                color(150)
-            } else if (random(1f) > 0.2f) {
-                color(100)
-            } else {
-                color(0)
+        private fun getNewColor(): Int {
+            return when {
+                random(1f) > 0.8f -> color(255)
+                random(1f) > 0.6f -> color(200)
+                random(1f) > 0.4f -> color(150)
+                random(1f) > 0.2f -> color(100)
+                else -> color(0)
             }
         }
     }
