@@ -1,7 +1,7 @@
 apply plugin: "kotlin"
 
 buildscript {
-    ext.kotlin_version = '1.2.30'
+    ext.kotlin_version = '1.2.31'
     repositories {
         mavenCentral()
     }
@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile group: 'org.processing', name: 'core', version: '3.3.6'
+    compile group: 'org.processing', name: 'core', version: '3.3.7'
 }
 
 compileKotlin {

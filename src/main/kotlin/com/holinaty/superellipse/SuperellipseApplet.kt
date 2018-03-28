@@ -52,9 +52,9 @@ class SuperellipseApplet : PApplet() {
 
         fun update() {
             col = color(
-                    sin(id+frameCount*(speed+0.0011f))*80f+80f,
-                    sin(id+frameCount*(speed+0.0022f))*127f+127f,
-                    sin(id+frameCount*(speed+0.0025f))*127f+127f
+                    sin(id+frameCount*(speed+0.0022f))*80f+80f,
+                    sin(id+frameCount*(speed+0.0044f))*127f+127f,
+                    sin(id+frameCount*(speed+0.0050f))*127f+127f
             )
             n = map(noise(id+frameCount*speed), 0f,1f, 0f,4f)
             m = map(noise((id*2)+frameCount*speed), 0f,1f, 0f,4f)
@@ -66,7 +66,7 @@ class SuperellipseApplet : PApplet() {
     private var superEllipses = ArrayList<Superellipse>()
 
     override fun settings() {
-        size(900,900)
+        size(700,700)
     }
 
     override fun setup() {
@@ -81,7 +81,12 @@ class SuperellipseApplet : PApplet() {
     }
 
     override fun draw() {
-        background(80)
+        val colr = color(
+                sin(frameCount*(0.0011f))*80f+80f,
+                sin(frameCount*(0.0022f))*127f+127f,
+                sin(frameCount*(0.0025f))*127f+127f
+        )
+        background(colr)
         fill(255)
         for (s in superEllipses) {
             s.update()
